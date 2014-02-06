@@ -3,7 +3,7 @@
 
 pkgbase=python-setuptools
 pkgname=('python-setuptools' 'python2-setuptools')
-pkgver=2.1.1
+pkgver=2.1.2
 pkgrel=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
 arch=('any')
@@ -11,7 +11,7 @@ license=('PSF')
 url="http://pypi.python.org/pypi/setuptools"
 makedepends=('python' 'python2')
 source=("http://pypi.python.org/packages/source/s/setuptools/setuptools-${pkgver}.tar.gz")
-md5sums=('e18af60a87982d6f7bf73176aed6bb49')
+md5sums=('3fb7b3abb02d1d1eb9dc45e1c53e1539')
 
 #check() {
 #   # Check python3 module
@@ -35,9 +35,6 @@ prepare() {
    sed -i -e "s|^#\!.*/usr/bin/python|#!/usr/bin/python3|" setuptools/tests/test_resources.py
    sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python3|" setuptools/command/easy_install.py
 
-   # Workaround encoding issue in setup.py introduced on 2.1.1. Upstream issue: https://bitbucket.org/pypa/setuptools/issue/144
-   sed -i -e "s/open('\(README\|CHANGES\|CHANGES (links)\).txt')/open('\1.txt', encoding='utf8')/" setup.py
- 
    cd ../setuptools-${pkgver}-python2
    sed -i -e "s|^#\!.*/usr/bin/python|#!/usr/bin/python2|" setuptools/tests/test_resources.py
    sed -i -e "s|^#\!.*/usr/bin/env python|#!/usr/bin/env python2|" setuptools/command/easy_install.py
