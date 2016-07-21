@@ -3,7 +3,7 @@
 
 pkgbase=python-setuptools
 pkgname=('python-setuptools' 'python2-setuptools')
-pkgver=24.0.3
+pkgver=24.2.0
 pkgrel=1
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
@@ -35,9 +35,11 @@ prepare() {
 
 build() {
   cd "$srcdir"/setuptools
+  python bootstrap.py
   python setup.py build
 
   cd "$srcdir"/setuptools-py2
+  python2 bootstrap.py
   python2 setup.py build
 }
 
