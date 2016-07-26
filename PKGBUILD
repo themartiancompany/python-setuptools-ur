@@ -3,7 +3,7 @@
 
 pkgbase=python-setuptools
 pkgname=('python-setuptools' 'python2-setuptools')
-pkgver=25.0.0
+pkgver=25.1.0
 pkgrel=1
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
@@ -24,6 +24,8 @@ prepare() {
   sed -e '/tag_build = .post/d' \
       -e '/tag_date = 1/d' \
       -i setuptools/setup.cfg
+
+  sed -i 's/flake8<3dev/flake8/' setuptools/setup.py
 
   cp -a setuptools{,-py2}
 
