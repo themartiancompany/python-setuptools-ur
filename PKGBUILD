@@ -3,8 +3,8 @@
 
 pkgbase=python-setuptools
 pkgname=('python-setuptools' 'python2-setuptools')
-pkgver=32.3.1
-pkgrel=2
+pkgver=33.0.0
+pkgrel=1
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
 arch=('any')
@@ -47,7 +47,7 @@ build() {
   python2 setup.py build
 }
 
-check() {
+check() { (
   # Workaround UTF-8 tests by setting LC_CTYPE
   export LC_CTYPE=en_US.UTF-8
 
@@ -59,7 +59,7 @@ check() {
 
   cd "$srcdir"/setuptools-py2
   python2 setup.py test
-}
+)}
  
 package_python-setuptools() {
   depends=('python-packaging' 'python-appdirs')
