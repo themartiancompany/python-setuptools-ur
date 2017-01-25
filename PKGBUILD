@@ -3,7 +3,7 @@
 
 pkgbase=python-setuptools
 pkgname=('python-setuptools' 'python2-setuptools')
-pkgver=34.0.1
+pkgver=34.0.2
 pkgrel=1
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
@@ -37,7 +37,7 @@ prepare() {
 
   export SETUPTOOLS_INSTALL_WINDOWS_SPECIFIC_FILES=0
 }
-    
+
 build() {
   cd "$srcdir"/setuptools
   python bootstrap.py
@@ -61,7 +61,7 @@ check() { (
   cd "$srcdir"/setuptools-py2
   python2 setup.py ptr
 )}
- 
+
 package_python-setuptools() {
   depends=('python-packaging' 'python-appdirs')
   provides=('python-distribute')
@@ -70,7 +70,7 @@ package_python-setuptools() {
   cd "$srcdir"/setuptools
   python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 --skip-build
 }
- 
+
 package_python2-setuptools() {
   depends=('python2-packaging' 'python2-appdirs')
   provides=('python2-distribute')
