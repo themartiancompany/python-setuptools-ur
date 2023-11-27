@@ -1,6 +1,6 @@
 pkgbase = python-setuptools
 	pkgdesc = Easily download, build, install, upgrade, and uninstall Python packages
-	pkgver = 68.1.1
+	pkgver = 68.1.2
 	pkgrel = 1
 	epoch = 1
 	url = https://pypi.org/project/setuptools/
@@ -31,7 +31,7 @@ pkgbase = python-setuptools
 	depends = python-validate-pyproject
 	provides = python-distribute
 	replaces = python-distribute
-	source = git+https://github.com/pypa/setuptools.git#commit=5f14368eb20068e58f6d8524efc0ae70082afa89
+	source = git+https://github.com/pypa/setuptools.git#commit=fdfe7118c0b41ebabf807d5869171f374c66afeb
 	source = system-validate-pyproject.patch
 	source = add-dependency.patch
 	source = build-no-isolation.patch
