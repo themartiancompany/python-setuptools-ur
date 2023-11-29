@@ -3,8 +3,8 @@
 # Contributor: Eli Schwartz <eschwartz@archlinux.org>
 
 pkgname=python-setuptools
-pkgver=68.1.2
-_commit=fdfe7118c0b41ebabf807d5869171f374c66afeb
+pkgver=68.2.0
+_commit=c95ddc47a4b63488fdb003528bc6dbece85be1e2
 pkgrel=1
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
