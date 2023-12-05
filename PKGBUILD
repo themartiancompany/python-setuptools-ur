@@ -3,8 +3,8 @@
 # Contributor: Eli Schwartz <eschwartz@archlinux.org>
 
 pkgname=python-setuptools
-pkgver=68.2.0
-_commit=c95ddc47a4b63488fdb003528bc6dbece85be1e2
+pkgver=68.2.1
+_commit=0120605db966af66207d996b82320ee676fabbf1
 pkgrel=1
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
@@ -14,10 +14,10 @@ url="https://pypi.org/project/setuptools/"
 depends=('python-jaraco.text' 'python-more-itertools' 'python-ordered-set' 'python-packaging'
          'python-platformdirs' 'python-tomli' 'python-validate-pyproject')
 makedepends=('git' 'python-setuptools')
-checkdepends=('python-jaraco.envs' 'python-jaraco.path' 'python-pip' 'python-pip-run'
-              'python-pytest-fixture-config' 'python-pytest-virtualenv' 'python-wheel'
-              'python-pytest-enabler' 'python-pytest-mypy' 'python-pytest-timeout' 'python-sphinx'
-              'python-build' 'python-ini2toml' 'python-tomli-w')
+checkdepends=('python-jaraco.envs' 'python-jaraco.path' 'python-pip' 'python-pytest-fixture-config'
+              'python-pytest-virtualenv' 'python-wheel' 'python-pytest-enabler' 'python-pytest-mypy'
+              'python-pytest-timeout' 'python-sphinx' 'python-build' 'python-ini2toml'
+              'python-tomli-w')
 provides=('python-distribute')
 replaces=('python-distribute')
 source=("git+https://github.com/pypa/setuptools.git#commit=$_commit"

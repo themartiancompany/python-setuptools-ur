@@ -1,6 +1,6 @@
 pkgbase = python-setuptools
 	pkgdesc = Easily download, build, install, upgrade, and uninstall Python packages
-	pkgver = 68.2.0
+	pkgver = 68.2.1
 	pkgrel = 1
 	epoch = 1
 	url = https://pypi.org/project/setuptools/
@@ -9,7 +9,6 @@ pkgbase = python-setuptools
 	checkdepends = python-jaraco.envs
 	checkdepends = python-jaraco.path
 	checkdepends = python-pip
-	checkdepends = python-pip-run
 	checkdepends = python-pytest-fixture-config
 	checkdepends = python-pytest-virtualenv
 	checkdepends = python-wheel
@@ -31,7 +30,7 @@ pkgbase = python-setuptools
 	depends = python-validate-pyproject
 	provides = python-distribute
 	replaces = python-distribute
-	source = git+https://github.com/pypa/setuptools.git#commit=c95ddc47a4b63488fdb003528bc6dbece85be1e2
+	source = git+https://github.com/pypa/setuptools.git#commit=0120605db966af66207d996b82320ee676fabbf1
 	source = system-validate-pyproject.patch
 	source = add-dependency.patch
 	source = build-no-isolation.patch
