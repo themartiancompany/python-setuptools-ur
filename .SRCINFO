@@ -3,7 +3,7 @@ pkgbase = python-setuptools
 	pkgver = 69.0.3
 	pkgrel = 1
 	epoch = 1
-	url = https://pypi.org/project/setuptools/
+	url = https://pypi.org/project/setuptools
 	arch = any
 	license = PSF
 	checkdepends = python-jaraco.envs
@@ -30,7 +30,7 @@ pkgbase = python-setuptools
 	depends = python-validate-pyproject
 	provides = python-distribute
 	replaces = python-distribute
-	source = git+https://github.com/pypa/setuptools.git#commit=b07d2f58233f9a99a820901924e263645c57a7c6
+	source = git+file:///data/data/com.termux/files/home/setuptools#commit=b07d2f58233f9a99a820901924e263645c57a7c6
 	source = system-validate-pyproject.patch
 	source = add-dependency.patch
 	source = build-no-isolation.patch
