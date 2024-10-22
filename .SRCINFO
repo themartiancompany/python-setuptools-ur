@@ -1,6 +1,6 @@
 pkgbase = python-setuptools
 	pkgdesc = Easily download, build, install, upgrade, and uninstall Python packages
-	pkgver = 69.0.3
+	pkgver = 75.1.0
 	pkgrel = 1
 	epoch = 1
 	url = https://pypi.org/project/setuptools
@@ -19,8 +19,8 @@ pkgbase = python-setuptools
 	checkdepends = python-build
 	checkdepends = python-ini2toml
 	checkdepends = python-tomli-w
-	makedepends = git
 	makedepends = python-setuptools
+	depends = python>=3.12
 	depends = python-jaraco.text
 	depends = python-more-itertools
 	depends = python-ordered-set
@@ -28,13 +28,13 @@ pkgbase = python-setuptools
 	depends = python-platformdirs
 	depends = python-tomli
 	depends = python-validate-pyproject
-	provides = python-distribute
+	provides = python-distribute=75.1.0
 	replaces = python-distribute
-	source = git+file:///data/data/com.termux/files/home/setuptools#commit=b07d2f58233f9a99a820901924e263645c57a7c6
+	source = setuptools-75.1.0.tar.gz::https://github.com/pypa/setuptools/archive/refs/tags/v75.1.0.tar.gz
 	source = system-validate-pyproject.patch
 	source = add-dependency.patch
 	source = build-no-isolation.patch
-	sha512sums = SKIP
+	sha512sums = 9ce0ea0c1e85db54ff54235198edba36ec1dd5251dd9ecccdadc5793a5d92264f04e97d521b416e9243e910fd9ef6e87991c5bbf6845d072b9051bb865d8d380
 	sha512sums = 390fea2c575a0042054f51d33e629b04a48f832f0a4a2dd07d34e23cdf330c382dba0f54bfb7c8a6a253bb248a4940f2a789672f715e4dc2aeb395fa185cae7a
 	sha512sums = 9c5d80c753e78bf613572fb789a234984087d0ce96d0bad22b5ed731d83c77bf6d8acfa65c78f6c78f9063be7819c2b58988fdf8e7fc89b55339f94a87b3b21f
 	sha512sums = 5b03349d09a6f1caff65684e746d3598f14172c3f4bd54981600598895baf08ba5cfaa3b0616af8ba0c1de607ca14cca8233358e5e34a7b9478f2522c0153ad5

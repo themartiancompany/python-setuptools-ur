@@ -6,13 +6,32 @@
 # Maintainer: Pellegrino Prevete (dvorak) <pellegrinoprevete@gmail.com>
 # Contributor: Eli Schwartz <eschwartz@archlinux.org>
 
+_git=true
+_offline=false
+_os="$( \
+  uname \
+    -o)"
+if [[ "${_os}" == "Android" ]]; then
+  _git=false
+fi
+_py="python"
+_pyver="$( \
+  "${_py}" \
+    -V | \
+    awk \
+      '{print $2}')"
+_pymajver="${_pyver%.*}"
 _pkg="setuptools"
-pkgname="python-${_pkg}"
-pkgver=69.0.3
+pkgname="${_py}-${_pkg}"
+pkgver=75.1.0
 _commit=b07d2f58233f9a99a820901924e263645c57a7c6
 pkgrel=1
 epoch=1
-pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
+_pkgdesc=(
+  "Easily download, build, install, upgrade,"
+  "and uninstall Python packages"
+)
+pkgdesc="${_pkgdesc[*]}"
 arch=(
   'any'
 )
@@ -21,72 +40,84 @@ license=(
 )
 url="https://pypi.org/project/${_pkg}"
 depends=(
-  'python-jaraco.text'
-  'python-more-itertools'
-  'python-ordered-set'
-  'python-packaging'
-  'python-platformdirs'
-  'python-tomli'
-  'python-validate-pyproject'
+  "${_py}>=${_pymajver}"
+  "${_py}-jaraco.text"
+  "${_py}-more-itertools"
+  "${_py}-ordered-set"
+  "${_py}-packaging"
+  "${_py}-platformdirs"
+  "${_py}-tomli"
+  "${_py}-validate-pyproject"
 )
 makedepends=(
-  'git'
-  'python-setuptools'
+  "${_py}-${_pkg}"
 )
+[[ "${_git}" == true ]] && \
+  makedepends+=(
+    'git'
+  )
 checkdepends=(
-  'python-jaraco.envs'
-  'python-jaraco.path'
-  'python-pip'
-  'python-pytest-fixture-config'
-  'python-pytest-virtualenv'
-  'python-wheel'
-  'python-pytest-enabler'
-  'python-pytest-mypy'
-  'python-pytest-timeout'
-  'python-sphinx'
-  'python-build'
-  'python-ini2toml'
-  'python-tomli-w'
+  "${_py}-jaraco.envs"
+  "${_py}-jaraco.path"
+  "${_py}-pip"
+  "${_py}-pytest-fixture-config"
+  "${_py}-pytest-virtualenv"
+  "${_py}-wheel"
+  "${_py}-pytest-enabler"
+  "${_py}-pytest-mypy"
+  "${_py}-pytest-timeout"
+  "${_py}-sphinx"
+  "${_py}-build"
+  "${_py}-ini2toml"
+  "${_py}-tomli-w"
 )
 provides=(
-  'python-distribute'
+  "${_py}-distribute=${pkgver}"
 )
 replaces=(
-  'python-distribute'
+  "${_py}-distribute"
 )
 _url="https://github.com/pypa/${_pkg}"
-_local="file://${HOME}/${_pkg}"
+_tag_name="commit"
+_tag="${_commit}"
+if [[ "${_git}" == "true" ]]; then
+  _source="${_pkg}-${pkgver}::git+${_url}#${_tag_name}=${_tag}?signed"
+  if [[ "${_offline}" == "true" ]]; then
+    _source="${_pkg}-${pkgver}::git+file://${HOME}/${_pkg}"
+  fi
+  _sum='SKIP'
+else
+  _source="${_pkg}-${pkgver}.tar.gz::${_url}/archive/refs/tags/v${pkgver}.tar.gz"
+  _sum="9ce0ea0c1e85db54ff54235198edba36ec1dd5251dd9ecccdadc5793a5d92264f04e97d521b416e9243e910fd9ef6e87991c5bbf6845d072b9051bb865d8d380"
+fi
 source=(
-  # "git+${_url}.git#commit=$_commit"
-  "git+${_local}#commit=$_commit"
+  "${_source}"
   system-validate-pyproject.patch
   add-dependency.patch
   build-no-isolation.patch
 )
 sha512sums=(
-  'SKIP'
+  "${_sum}"
   '390fea2c575a0042054f51d33e629b04a48f832f0a4a2dd07d34e23cdf330c382dba0f54bfb7c8a6a253bb248a4940f2a789672f715e4dc2aeb395fa185cae7a'
   '9c5d80c753e78bf613572fb789a234984087d0ce96d0bad22b5ed731d83c77bf6d8acfa65c78f6c78f9063be7819c2b58988fdf8e7fc89b55339f94a87b3b21f'
   '5b03349d09a6f1caff65684e746d3598f14172c3f4bd54981600598895baf08ba5cfaa3b0616af8ba0c1de607ca14cca8233358e5e34a7b9478f2522c0153ad5'
 )
-
 export \
   SETUPTOOLS_INSTALL_WINDOWS_SPECIFIC_FILES=0
 
 prepare() {
+  ls
   cd \
-    "${_pkg}"
-
-  patch \
-    -p1 \
-    -i \
-    ../system-validate-pyproject.patch
-
+    "${_pkg}-${pkgver}"
+  # patch \
+  #   -p1 \
+  #   -i \
+  #   ../system-validate-pyproject.patch
   rm \
-    -r \
+    -rf \
     {pkg_resources,"${_pkg}"}/{extern,_vendor} \
-    "${_pkg}/config/_validate_pyproject"
-
+    "${_pkg}/config/_validate_pyproject" || \
+    true
   # Upstream devendoring logic is badly broken, see:
   # https://bugs.archlinux.org/task/58670
   # https://github.com/pypa/pip/issues/5429
@@ -117,19 +148,16 @@ prepare() {
             's/from \.\.extern\./from /' \
           {} +
   done
-
   # Add the devendored dependencies into metadata of setuptools
-  patch \
-    -p1 \
-    -i \
-    ../add-dependency.patch
-
+  # patch \
+  #   -p1 \
+  #   -i \
+  #   ../add-dependency.patch
   # Fix tests invoking python-build
-  patch \
-    -p1 \
-    -i \
-    ../build-no-isolation.patch
-
+  # patch \
+  #   -p1 \
+  #   -i \
+  #   ../build-no-isolation.patch
   # Remove post-release tag since we are using stable tags
   sed \
     -e \
@@ -138,7 +166,6 @@ prepare() {
       '/tag_date = 1/d' \
     -i \
     setup.cfg
-
   # Fix shebang
   sed \
     -i \
@@ -149,7 +176,7 @@ prepare() {
 
 build() {
   cd \
-    "${_pkg}"
+    "${_pkg}-${pkgver}"
   "${_py}" \
     setup.py \
       build
@@ -160,13 +187,11 @@ check() { (
   # tests by setting LC_CTYPE
   export \
     LC_CTYPE=en_US.UTF-8
-
   # https://github.com/pypa/setuptools/pull/810
   export \
     PYTHONDONTWRITEBYTECODE=1
-
   cd \
-    "${_pkg}"
+    "${_pkg}-${pkgver}"
   # 1,4: subtle difference introduced by devendoring
   # 2: pip failures related to devendoring, 
   # 3,5: TODO
@@ -191,7 +216,7 @@ check() { (
 
 package() {
   cd \
-    "${_pkg}"
+    "${_pkg}-${pkgver}"
   "${_py}" \
     setup.py \
       install \
